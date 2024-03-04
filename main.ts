@@ -2,7 +2,7 @@ namespace SpriteKind {
     export const object = SpriteKind.create()
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile0`, function (sprite, location) {
-    game.splash("Sembla que estas a un", "llaberint, utilitza")
+    game.splash("Sembla que estas a un", "llaberint de mart, utilitza")
     game.splash("els cursos per a moure't")
     sprites.destroy(mySprite)
     mySprite3 = sprites.create(img`
