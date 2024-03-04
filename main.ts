@@ -1,7 +1,13 @@
+namespace SpriteKind {
+    export const object = SpriteKind.create()
+}
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
-    mySprite.vy = -220
+    mySprite.ay = 200
 })
-scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.chestClosed, function (sprite, location) {
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite, location) {
+    game.splash("Vigila que amb lava", "perds uuna vida")
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.object, function (sprite, otherSprite) {
     sprites.destroy(mySprite)
     scene.setBackgroundImage(img`
         ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
@@ -163,6 +169,11 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.chestClosed, function (sp
         c c c c c c e e 2 2 2 4 2 2 e e 
         c c c c c c e e 2 2 2 2 4 2 e e 
         `, SpriteKind.Player)
+    controller.moveSprite(mySprite3)
+})
+scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.hazardLava1, function (sprite, location) {
+    info.changeLifeBy(-1)
+    mySprite.setPosition(0, 140)
 })
 let mySprite3: Sprite = null
 let mySprite2: Sprite = null
@@ -296,20 +307,40 @@ mySprite = sprites.create(img`
     . . . f f e e e e f 2 2 2 f . . 
     . . . f e e e f f e e e e f . . 
     . . . f f f f e e 2 2 2 2 e f . 
-    . . . f e 2 2 2 f f f f e 2 f . 
-    . . f f f f f f f e e e f f f . 
-    . . f f e 4 4 e b f 4 4 e e f . 
-    . . f e e 4 d 4 1 f d d e f . . 
-    . . . f e e e 4 d d d d f . . . 
-    . . . . f f e e 4 4 4 e f . . . 
-    . . . . . 4 d d e 2 2 2 f . . . 
-    . . . . . e d d e 2 2 2 f . . . 
-    . . . . . f e e f 4 5 5 f . . . 
+    f f . f e 2 2 2 f f f f e 2 f . 
+    f f f f f f f f f e e e f f f . 
+    f f f f e 4 4 e b f 4 4 e e f . 
+    f f f e e 4 d 4 1 f d d e f . . 
+    f f . f e e e 4 d d d d f . . . 
+    f f . . f f e e 4 4 4 e f . . . 
+    f f . . . 4 d d e 2 2 2 f . . . 
+    2 4 . . . e d d e 2 2 2 f . . . 
+    . 2 . . . f e e f 4 5 5 f . . . 
     . . . . . . f f f f f f . . . . 
     . . . . . . . f f f . . . . . . 
     `, SpriteKind.Player)
-controller.moveSprite(mySprite, 200, 0)
+let mySprite4 = sprites.create(img`
+    . . b b b b b b b b b b b b . . 
+    . b e 4 4 4 4 4 4 4 4 4 4 e b . 
+    b e 4 4 4 4 4 4 4 4 4 4 4 4 e b 
+    b e 4 4 4 4 4 4 4 4 4 4 4 4 e b 
+    b e 4 4 4 4 4 4 4 4 4 4 4 4 e b 
+    b e e 4 4 4 4 4 4 4 4 4 4 e e b 
+    b e e e e e e e e e e e e e e b 
+    b e e e e e e e e e e e e e e b 
+    b b b b b b b d d b b b b b b b 
+    c b b b b b b c c b b b b b b c 
+    c c c c c c b c c b c c c c c c 
+    b e e e e e c b b c e e e e e b 
+    b e e e e e e e e e e e e e e b 
+    b c e e e e e e e e e e e e c b 
+    b b b b b b b b b b b b b b b b 
+    . b b . . . . . . . . . . b b . 
+    `, SpriteKind.object)
+mySprite4.setPosition(750, 135)
+controller.moveSprite(mySprite, 100, 100)
 mySprite.setStayInScreen(true)
 mySprite.setPosition(0, 140)
 tiles.setCurrentTilemap(tilemap`level1`)
 scene.cameraFollowSprite(mySprite)
+info.setLife(3)
